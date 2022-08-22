@@ -599,8 +599,8 @@
 		#define EA_WINAPI_FAMILY EA_WINAPI_FAMILY_DESKTOP_APP
 	#endif
 
-	#define EA_WINAPI_PARTITION_DESKTOP   1
-	#define EA_WINAPI_PARTITION_APP       1
+	#define EA_WINAPI_PARTITION_DESKTOP  (WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP)   // rbfx fix for UWP
+	#define EA_WINAPI_PARTITION_APP      (WINAPI_FAMILY == WINAPI_FAMILY_APP)           // rbfx fix for UWP
 	#define EA_WINAPI_PARTITION_GAMES    (EA_WINAPI_FAMILY == EA_WINAPI_FAMILY_GAMES)
 
 	#define EA_WINAPI_FAMILY_PARTITION(Partition)   (Partition)
@@ -619,6 +619,17 @@
 // __sun is defined by the GCC compiler.
 // __i386 is defined by the Sun and GCC compilers.
 // __sparc is defined by the Sun and GCC compilers.
+#elif defined(__EMSCRIPTEN__)   // Urho3D
+	#undef  EA_PLATFORM_WEB
+	#define EA_PLATFORM_WEB 1
+	#define EA_PLATFORM_UNIX 0
+	#define EA_PLATFORM_POSIX 1
+	#define EA_PLATFORM_NAME "Web"
+	#define EA_PLATFORM_DESCRIPTION "Web (Emscritpten)"
+	#define EA_ASM_STYLE_ATT 1
+	#define EA_SYSTEM_LITTLE_ENDIAN 1
+	#define EA_POSIX_THREADS_AVAILABLE 0
+	#define EA_PROCESSOR_WASM 1
 #else
 	#error Unknown platform
 	#error Unknown processor
